@@ -1,0 +1,12 @@
+
+# Dsuite internal agent communication & synchronization
+.agent/
+.agent
+.agent_history/
+.agent_history
+.agent_ipc/
+.agent_ipc
+.agent_signals/
+.agent_signals
+.agent_initialized
+.package_deps_hash
