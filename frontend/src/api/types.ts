@@ -8,12 +8,15 @@
 // Enums (mirroring backend)
 // =============================================================================
 
+/**
+ * UserRole enum - matches backend UserRole exactly
+ * Backend values: Executive, PMO_Manager, Team_Member, Admin
+ */
 export enum UserRole {
-  EXECUTIVE = 'EXECUTIVE',
-  PMO = 'PMO',
-  TEAM_LEAD = 'TEAM_LEAD',
-  TEAM_MEMBER = 'TEAM_MEMBER',
-  VIEWER = 'VIEWER',
+  EXECUTIVE = 'Executive',
+  PMO_MANAGER = 'PMO_Manager',
+  TEAM_MEMBER = 'Team_Member',
+  ADMIN = 'Admin',
 }
 
 export enum InitiativeStatus {
@@ -146,22 +149,43 @@ export enum BenefitType {
 // User Types
 // =============================================================================
 
+/**
+ * User interface - matches backend UserResponse schema
+ */
 export interface User {
   id: string;
   email: string;
   full_name: string;
   role: UserRole;
-  department?: string;
   is_active: boolean;
+  last_login_at?: string;
   created_at: string;
   updated_at: string;
 }
 
-export interface UserLogin {
+/**
+ * LoginRequest interface - matches backend UserLogin schema
+ */
+export interface LoginRequest {
   email: string;
   password: string;
 }
 
+/**
+ * LoginResponse interface - matches backend TokenResponse schema
+ * Note: includes user object in response
+ */
+export interface LoginResponse {
+  access_token: string;
+  refresh_token: string;
+  token_type: string;
+  expires_in: number;
+  user: User;
+}
+
+/**
+ * TokenResponse interface - alias for LoginResponse
+ */
 export interface TokenResponse {
   access_token: string;
   refresh_token: string;
@@ -169,12 +193,45 @@ export interface TokenResponse {
   expires_in: number;
 }
 
+/**
+ * UserProfileResponse interface - matches backend UserProfileResponse
+ */
 export interface UserProfileResponse {
   id: string;
   email: string;
   full_name: string;
   role: UserRole;
   department?: string;
+}
+
+/**
+ * TokenRefreshRequest interface - matches backend TokenRefreshRequest
+ */
+export interface TokenRefreshRequest {
+  refresh_token: string;
+}
+
+/**
+ * TokenRefreshResponse interface - matches backend TokenRefreshResponse
+ */
+export interface TokenRefreshResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+/**
+ * LogoutResponse interface - matches backend LogoutResponse
+ */
+export interface LogoutResponse {
+  message: string;
+  success: boolean;
+}
+
+// Legacy UserLogin interface (for backward compatibility)
+export interface UserLogin {
+  email: string;
+  password: string;
 }
 
 // =============================================================================
@@ -483,6 +540,16 @@ export interface ApprovalAuditEntry {
   action: string;
   details?: Record<string, unknown>;
   timestamp: string;
+}
+
+// Mock Approval Preview type for Wave 2 placeholder
+export interface MockApprovalPreview {
+  id: string;
+  agentAction: string;
+  evidenceSnippet: string;
+  confidenceScore: number;
+  initiativeName: string;
+  submittedAt: string;
 }
 
 // =============================================================================
