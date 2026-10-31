@@ -15,8 +15,10 @@
 export enum UserRole {
   EXECUTIVE = 'Executive',
   PMO_MANAGER = 'PMO_Manager',
+  TEAM_LEAD = 'Team_Lead',
   TEAM_MEMBER = 'Team_Member',
   ADMIN = 'Admin',
+  VIEWER = 'Viewer',
 }
 
 export enum InitiativeStatus {
@@ -652,6 +654,44 @@ export interface PortfolioHealth {
   trend: TrendDirection;
   period_start: string;
   period_end: string;
+}
+
+// =============================================================================
+// Dashboard Executive View Types
+// =============================================================================
+
+/**
+ * Health trend data point for line chart
+ */
+export interface HealthTrendPoint {
+  month: string;
+  score: number;
+}
+
+/**
+ * Blocked initiative summary for Recent Blockers table
+ */
+export interface BlockedInitiative {
+  id: string;
+  code: string;
+  name: string;
+  status: InitiativeStatus;
+  owner: User;
+  blocked_at: string;
+  reason?: string;
+}
+
+/**
+ * Dashboard summary for Executive View
+ * Contains KPIs, health trends, and recent blockers
+ */
+export interface DashboardSummary {
+  totalInitiatives: number;
+  atRiskCount: number;
+  avgHealthScore: number;
+  benefitsRealized: number;
+  healthTrend: HealthTrendPoint[];
+  recentBlockers: BlockedInitiative[];
 }
 
 // =============================================================================
