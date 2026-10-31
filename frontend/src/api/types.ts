@@ -146,6 +146,34 @@ export enum BenefitType {
 }
 
 // =============================================================================
+// API Response Types
+// =============================================================================
+
+/**
+ * API Error structure
+ */
+export interface ApiError {
+  code: string;
+  message: string;
+  details?: Record<string, unknown>;
+}
+
+/**
+ * Generic API Response wrapper
+ */
+export interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: ApiError;
+  meta?: {
+    page?: number;
+    page_size?: number;
+    total?: number;
+    total_pages?: number;
+  };
+}
+
+// =============================================================================
 // User Types
 // =============================================================================
 
@@ -627,24 +655,8 @@ export interface PortfolioHealth {
 }
 
 // =============================================================================
-// API Response Types
+// Pagination Types
 // =============================================================================
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: {
-    code: string;
-    message: string;
-    details?: Record<string, unknown>;
-  };
-  meta?: {
-    page?: number;
-    page_size?: number;
-    total?: number;
-    total_pages?: number;
-  };
-}
 
 export interface PaginatedResponse<T> {
   items: T[];
