@@ -594,6 +594,9 @@ export interface AdoptionSignal {
   value: number;
   recorded_at: string;
   metadata?: Record<string, unknown>;
+  is_anomaly?: boolean;
+  anomaly_severity?: AnomalySeverity;
+  notes?: string;
 }
 
 export interface PredictabilityScore {
@@ -611,6 +614,23 @@ export interface PredictabilityScore {
   };
 }
 
+export interface SignalHistoryPoint {
+  date: string;
+  value: number;
+  is_anomaly: boolean;
+  anomaly_severity?: AnomalySeverity;
+  signal_type: SignalType;
+}
+
+export interface SignalHistoryResponse {
+  initiative_id: string;
+  points: SignalHistoryPoint[];
+  period_start: string;
+  period_end: string;
+  total_signals: number;
+  anomaly_count: number;
+}
+
 export interface Anomaly {
   id: string;
   initiative_id?: string;
@@ -623,6 +643,14 @@ export interface Anomaly {
   resolved_at?: string;
   detected_by: string;
   resolution_notes?: string;
+}
+
+export interface LogSignalRequest {
+  initiative_id: string;
+  signal_type: SignalType;
+  value: number;
+  notes?: string;
+  recorded_at?: string;
 }
 
 // =============================================================================
